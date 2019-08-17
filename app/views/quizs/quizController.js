@@ -12,13 +12,18 @@ angular.module('myApp.quiz', ['ngRoute','ui.bootstrap'])
         console.log('Quiz controller')
         $scope.currentQuestion = 0;
         $scope.questions=[];
-        $scope.time = 60;
+        $scope.time = 5;
         $scope.quizMarks = 0;
         $scope.answer = {};
 
-        var stop = $interval(()=>{$scope.time --}, 1000);
+        var stop = $interval(()=>{$scope.time -- 
+            if ($scope.time == 0) {
+                $scope.submitQuiz();
+            }
+        }, 1000);
         quizFactory.getQuestions($routeParams.subjectCode).then((data)=>{
             $scope.questions = data;
+            
         });
 
         $scope.question = () => {
